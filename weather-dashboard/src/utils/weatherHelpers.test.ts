@@ -1,9 +1,10 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import {
   celsiusToFahrenheit,
   fahrenheitToCelsius,
   wmoCodeToLabel,
   wmoCodeToIconName,
+  searchCities,
 } from './weatherHelpers'
 
 describe('celsiusToFahrenheit', () => {
@@ -39,5 +40,33 @@ describe('wmoCodeToLabel', () => {
 describe('wmoCodeToIconName', () => {
   it('returns WiDaySunny for code 0', () => {
     expect(wmoCodeToIconName(0)).toBe('WiDaySunny')
+  })
+})
+
+describe('searchCities', () => {
+  it('returns geocoding results for a valid query', async () => {
+    const mockResponse = {
+      results: [
+        { name: 'London', latitude: 51.5, longitude: -0.12, country: 'United Kingdom' },
+      ],
+    }
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mockResponse,
+    } as Response)
+
+    const results = await searchCities('London')
+    expect(results).toHaveLength(1)
+    expect(results[0].name).toBe('London')
+  })
+
+  it('returns empty array when no results', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({}),
+    } as Response)
+
+    const results = await searchCities('zzzznotacity')
+    expect(results).toEqual([])
   })
 })

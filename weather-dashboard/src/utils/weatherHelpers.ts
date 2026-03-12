@@ -53,6 +53,17 @@ export function wmoCodeToIconName(code: number): string {
 
 // ─── Geocoding (stub — implemented by Agent 2) ───────────────────────────
 
-export async function searchCities(_query: string): Promise<GeocodingResult[]> {
-  throw new Error('searchCities: not yet implemented — Agent 2 will fill this in')
+export async function searchCities(query: string): Promise<GeocodingResult[]> {
+  if (!query.trim()) return []
+  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5`
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`Geocoding error: ${res.status}`)
+  const data = await res.json()
+  if (!data.results) return []
+  return data.results.map((r: Record<string, unknown>) => ({
+    name: r.name as string,
+    latitude: r.latitude as number,
+    longitude: r.longitude as number,
+    country: r.country as string,
+  }))
 }
