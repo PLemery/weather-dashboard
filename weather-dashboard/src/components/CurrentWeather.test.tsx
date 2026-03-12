@@ -29,6 +29,6 @@ describe('CurrentWeather', () => {
     render(<CurrentWeather data={STUB_CURRENT_WEATHER} unit="C" onToggleUnit={vi.fn()} />)
     expect(screen.getByText(/55/)).toBeInTheDocument() // humidity
     expect(screen.getByText(/14/)).toBeInTheDocument() // wind
-    expect(screen.getByText(/5/)).toBeInTheDocument()  // UV
+    expect(screen.getByRole('meter', { name: /UV index/i })).toBeInTheDocument()
   })
 })

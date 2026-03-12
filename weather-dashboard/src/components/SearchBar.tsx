@@ -88,6 +88,7 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           placeholder="Search city…"
+          aria-label="Search for a city"
           className={[
             'flex-1 py-3 pr-4 bg-transparent outline-none',
             'text-sm text-slate-100 placeholder-slate-500',

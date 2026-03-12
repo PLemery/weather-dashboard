@@ -103,6 +103,7 @@ export function CurrentWeather({ data, unit, onToggleUnit }: CurrentWeatherProps
                   style={{ width: `${uvPercent}%` }}
                 />
               </div>
+              <span className="text-xs font-mono text-slate-200 tabular-nums ml-1">{data.uvIndex}</span>
             </div>
           </div>
         </div>
