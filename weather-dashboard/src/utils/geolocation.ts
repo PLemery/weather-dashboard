@@ -1,4 +1,4 @@
-// Implemented by Agent 2. Stub allows App.tsx to import without errors.
+// Wraps the browser Geolocation API and returns the user's current coordinates.
 export async function getUserLocation(): Promise<{ latitude: number; longitude: number }> {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {

@@ -51,7 +51,7 @@ export function wmoCodeToIconName(code: number): string {
   return WMO_ICONS[code] ?? 'WiDaySunny'
 }
 
-// ─── Geocoding (stub — implemented by Agent 2) ───────────────────────────
+// ─── Geocoding ───────────────────────────────────────────
 
 export async function searchCities(query: string): Promise<GeocodingResult[]> {
   if (!query.trim()) return []

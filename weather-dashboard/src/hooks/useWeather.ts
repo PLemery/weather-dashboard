@@ -18,6 +18,9 @@ function buildUrl(city: City): string {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapResponse(data: any): WeatherData {
+  if (!data?.current || !data?.daily || !data?.hourly) {
+    throw new Error('Unexpected response shape from weather API')
+  }
   const current: CurrentWeather = {
     temperature: data.current.temperature_2m,
     humidity: data.current.relative_humidity_2m,
@@ -89,10 +92,9 @@ export function useWeather(city: City | null): WeatherState {
           dispatch({ type: 'FETCH_SUCCESS', payload: mapResponse(json) })
         }
       })
-      .catch((err: Error) => {
-        if (!cancelled) {
-          dispatch({ type: 'FETCH_ERROR', payload: err.message })
-        }
+      .catch((err: unknown) => {
+        const message = err instanceof Error ? err.message : 'Unknown error'
+        if (!cancelled) dispatch({ type: 'FETCH_ERROR', payload: message })
       })
 
     return () => { cancelled = true }
