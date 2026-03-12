@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse-rain {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.6; transform: translateY(3px); }
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+.animate-spin-slow { animation: spin-slow 8s linear infinite; }
+.animate-pulse-rain { animation: pulse-rain 1.2s ease-in-out infinite; }
+.animate-sway { animation: sway 2s ease-in-out infinite; }
