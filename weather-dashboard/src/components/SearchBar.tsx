@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { SearchBarProps, City, GeocodingResult } from '../types/weather'
 import { searchCities } from '../utils/weatherHelpers'
 import { WiDaySunny } from 'react-icons/wi'
