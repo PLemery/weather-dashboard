@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: weather-dashboard
+    runtime: static
+    buildCommand: cd weather-dashboard && npm install && npm run build
+    staticPublishPath: weather-dashboard/dist
