@@ -10,6 +10,10 @@ export function fahrenheitToCelsius(f: number): number {
   return Math.round(((f - 32) * 5) / 9)
 }
 
+export function kphToMph(kph: number): number {
+  return Math.round(kph * 0.621371)
+}
+
 // ─── WMO Code Mapping ────────────────────────────────────────────────────
 
 const WMO_LABELS: Record<number, string> = {

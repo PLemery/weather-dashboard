@@ -1,10 +1,12 @@
 import React from 'react'
 import * as wi from 'react-icons/wi'
 import type { CurrentWeatherProps } from '../types/weather'
-import { celsiusToFahrenheit, wmoCodeToLabel, wmoCodeToIconName } from '../utils/weatherHelpers'
+import { celsiusToFahrenheit, kphToMph, wmoCodeToLabel, wmoCodeToIconName } from '../utils/weatherHelpers'
 
 export function CurrentWeather({ data, unit, onToggleUnit }: CurrentWeatherProps) {
   const temp = unit === 'F' ? celsiusToFahrenheit(data.temperature) : Math.round(data.temperature)
+  const windSpeed = unit === 'F' ? kphToMph(data.windSpeed) : data.windSpeed
+  const windUnit = unit === 'F' ? 'mph' : 'km/h'
   const label = wmoCodeToLabel(data.weatherCode)
   const iconName = wmoCodeToIconName(data.weatherCode)
   const WeatherIcon = (wi as Record<string, React.ElementType>)[iconName] ?? wi.WiDaySunny
@@ -45,9 +47,9 @@ export function CurrentWeather({ data, unit, onToggleUnit }: CurrentWeatherProps
               'transition-all duration-200',
               'shadow-[0_2px_8px_rgba(0,0,0,0.3)]',
             ].join(' ')}
-            aria-label={`Switch to °${unit === 'C' ? 'F' : 'C'}`}
+            aria-label={unit === 'C' ? 'Switch to °F / mph' : 'Switch to °C / km/h'}
           >
-            {`Switch to °${unit === 'C' ? 'F' : 'C'}`}
+            {unit === 'C' ? 'Switch to °F / mph' : 'Switch to °C / km/h'}
           </button>
         </div>
 
@@ -79,7 +81,7 @@ export function CurrentWeather({ data, unit, onToggleUnit }: CurrentWeatherProps
               <span className="text-xs text-slate-400 font-mono uppercase tracking-wider">Wind</span>
             </div>
             <span className="text-sm font-mono text-slate-200 tabular-nums">
-              {`${data.windSpeed} km/h`}
+              {`${windSpeed} ${windUnit}`}
             </span>
           </div>
 
