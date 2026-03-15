@@ -16,7 +16,7 @@ export function CityList({ cities, activeCity, onCitySelect, onRemoveCity }: Cit
       {/* Header */}
       <div className="px-4 py-3 border-b border-slate-700/40 flex items-center gap-2">
         <div className="w-1.5 h-1.5 rounded-full bg-cyan-400/70" />
-        <span className="text-[10px] font-mono tracking-widest uppercase text-slate-500">
+        <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400">
           Saved Cities
         </span>
       </div>
@@ -53,7 +53,7 @@ export function CityList({ cities, activeCity, onCitySelect, onRemoveCity }: Cit
                 <span className="block text-sm font-mono truncate">
                   {city.name}
                 </span>
-                <span className="block text-[10px] font-mono text-slate-600 uppercase tracking-wider mt-0.5">
+                <span className="block text-[10px] font-mono text-slate-400 uppercase tracking-wider mt-0.5">
                   {city.country}
                 </span>
               </button>

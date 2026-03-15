@@ -52,14 +52,14 @@ export function HourlyChart({ hours, unit }: HourlyChartProps) {
 
           <XAxis
             dataKey="hour"
-            tick={{ fill: '#64748b', fontSize: 10, fontFamily: 'monospace' }}
+            tick={{ fill: '#94a3b8', fontSize: 10, fontFamily: 'monospace' }}
             tickLine={false}
             axisLine={false}
             interval="preserveStartEnd"
           />
 
           <YAxis
-            tick={{ fill: '#64748b', fontSize: 10, fontFamily: 'monospace' }}
+            tick={{ fill: '#94a3b8', fontSize: 10, fontFamily: 'monospace' }}
             tickLine={false}
             axisLine={false}
             tickFormatter={(v) => `${v}°`}

@@ -82,7 +82,7 @@ function App() {
         {/* Top bar: search + title */}
         <header className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="flex-1 min-w-0">
-            <h1 className="text-[10px] font-mono tracking-[0.3em] uppercase text-slate-500 mb-0.5">
+            <h1 className="text-[10px] font-mono tracking-[0.3em] uppercase text-slate-400 mb-0.5">
               Weather Dashboard
             </h1>
           </div>
@@ -116,7 +116,7 @@ function App() {
             {!activeCity && !loading && (
               <div className="rounded-2xl border border-slate-700/30 bg-slate-900/40 backdrop-blur-md p-8 text-center">
                 <div className="text-4xl mb-3 opacity-30">⛅</div>
-                <p className="text-sm font-mono text-slate-500">Search for a city to get started</p>
+                <p className="text-sm font-mono text-slate-400">Search for a city to get started</p>
               </div>
             )}
 
@@ -130,7 +130,7 @@ function App() {
                 <div>
                   <div className="flex items-center gap-2 mb-3 px-1">
                     <div className="w-1 h-1 rounded-full bg-cyan-400/50" />
-                    <span className="text-[10px] font-mono tracking-widest uppercase text-slate-500">
+                    <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400">
                       7-Day Forecast
                     </span>
                   </div>
@@ -145,7 +145,7 @@ function App() {
                 <div>
                   <div className="flex items-center gap-2 mb-3 px-1">
                     <div className="w-1 h-1 rounded-full bg-cyan-400/50" />
-                    <span className="text-[10px] font-mono tracking-widest uppercase text-slate-500">
+                    <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400">
                       Hourly Trend
                     </span>
                   </div>
@@ -159,7 +159,7 @@ function App() {
           <aside className="lg:sticky lg:top-8">
             <div className="flex items-center gap-2 mb-3 px-1">
               <div className="w-1 h-1 rounded-full bg-cyan-400/50" />
-              <span className="text-[10px] font-mono tracking-widest uppercase text-slate-500">
+              <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400">
                 Favorites
               </span>
             </div>

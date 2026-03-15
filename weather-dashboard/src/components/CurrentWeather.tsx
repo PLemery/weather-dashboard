@@ -65,7 +65,7 @@ export function CurrentWeather({ data, unit, onToggleUnit }: CurrentWeatherProps
           <div className="flex flex-col gap-1.5 rounded-xl border border-slate-700/40 bg-slate-800/40 p-3">
             <div className="flex items-center gap-1.5">
               <wi.WiHumidity className="text-cyan-400/70 shrink-0" size={18} />
-              <span className="text-xs text-slate-500 font-mono uppercase tracking-wider">Humidity</span>
+              <span className="text-xs text-slate-400 font-mono uppercase tracking-wider">Humidity</span>
             </div>
             <span className="text-sm font-mono text-slate-200 tabular-nums">
               {`${data.humidity}%`}
@@ -76,7 +76,7 @@ export function CurrentWeather({ data, unit, onToggleUnit }: CurrentWeatherProps
           <div className="flex flex-col gap-1.5 rounded-xl border border-slate-700/40 bg-slate-800/40 p-3">
             <div className="flex items-center gap-1.5">
               <wi.WiStrongWind className="text-cyan-400/70 shrink-0" size={18} />
-              <span className="text-xs text-slate-500 font-mono uppercase tracking-wider">Wind</span>
+              <span className="text-xs text-slate-400 font-mono uppercase tracking-wider">Wind</span>
             </div>
             <span className="text-sm font-mono text-slate-200 tabular-nums">
               {`${data.windSpeed} km/h`}
@@ -87,7 +87,7 @@ export function CurrentWeather({ data, unit, onToggleUnit }: CurrentWeatherProps
           <div className="flex flex-col gap-1.5 rounded-xl border border-slate-700/40 bg-slate-800/40 p-3">
             <div className="flex items-center gap-1.5">
               <wi.WiSolarEclipse className="text-cyan-400/70 shrink-0" size={18} />
-              <span className="text-xs text-slate-500 font-mono uppercase tracking-wider">UV</span>
+              <span className="text-xs text-slate-400 font-mono uppercase tracking-wider">UV</span>
             </div>
             <div
               className="flex items-center gap-2"
