@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { SearchBar } from './components/SearchBar'
 import { CurrentWeather } from './components/CurrentWeather'
 import { ForecastCard } from './components/ForecastCard'
@@ -6,7 +6,6 @@ import { HourlyChart } from './components/HourlyChart'
 import { CityList } from './components/CityList'
 import { useWeather } from './hooks/useWeather'
 import { getUserLocation } from './utils/geolocation'
-import { searchCities } from './utils/weatherHelpers'
 import type { City } from './types/weather'
 
 const STORAGE_KEY = 'weather-dashboard-cities'
@@ -17,7 +16,7 @@ function getThemeClass(code: number | undefined): string {
   if (code === 2 || code === 3) return 'bg-gradient-to-br from-slate-400 to-slate-600'
   if (code >= 45 && code <= 48) return 'bg-gradient-to-br from-gray-400 to-gray-600'
   if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'bg-gradient-to-br from-blue-700 to-slate-800'
-  if (code >= 71 && code <= 77) return 'bg-gradient-to-br from-slate-100 to-blue-200 text-slate-800'
+  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return 'bg-gradient-to-br from-slate-100 to-blue-200 text-slate-800'
   if (code >= 95) return 'bg-gradient-to-br from-purple-900 to-slate-900'
   return 'bg-gray-900'
 }
@@ -34,9 +33,6 @@ function App() {
     } catch { return null }
   })
   const [unit, setUnit] = useState<'C' | 'F'>('F')
-  const hadSavedCitiesOnMount = useRef(
-    (() => { try { return (JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]') as City[]).length > 0 } catch { return false } })()
-  )
   const { data, loading, error } = useWeather(activeCity)
 
   const handleCitySelect = useCallback((city: City) => {
@@ -49,18 +45,18 @@ function App() {
   }, [savedCities])
 
   useEffect(() => {
-    if (hadSavedCitiesOnMount.current) return
     getUserLocation()
-      .then(({ latitude, longitude }) => searchCities(`${latitude},${longitude}`))
-      .then((results) => {
-        if (results[0]) handleCitySelect({
-          id: crypto.randomUUID(),
-          name: results[0].name,
-          latitude: results[0].latitude,
-          longitude: results[0].longitude,
-          country: results[0].country,
-        })
-      })
+      .then(({ latitude, longitude }) =>
+        fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
+          .then((r) => r.json())
+          .then((place) => handleCitySelect({
+            id: crypto.randomUUID(),
+            name: place.city || place.locality || place.principalSubdivision || 'My Location',
+            latitude,
+            longitude,
+            country: place.countryName ?? '',
+          }))
+      )
       .catch(() => {})
   }, [handleCitySelect])
 
@@ -171,7 +167,10 @@ function App() {
               cities={savedCities}
               activeCity={activeCity}
               onCitySelect={setActiveCity}
-              onRemoveCity={(id) => setSavedCities((prev) => prev.filter((c) => c.id !== id))}
+              onRemoveCity={(id) => {
+                setSavedCities((prev) => prev.filter((c) => c.id !== id))
+                if (activeCity?.id === id) setActiveCity(null)
+              }}
             />
           </aside>
         </main>

@@ -5,6 +5,7 @@ export interface GeocodingResult {
   latitude: number
   longitude: number
   country: string
+  admin1?: string  // state / province
 }
 
 export interface CurrentWeather {

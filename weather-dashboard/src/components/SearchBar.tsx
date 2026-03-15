@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import type { SearchBarProps, City, GeocodingResult } from '../types/weather'
 import { searchCities } from '../utils/weatherHelpers'
-import { WiDaySunny } from 'react-icons/wi'
+
 
 export function SearchBar({ onCitySelect }: SearchBarProps) {
   const [query, setQuery] = useState('')
@@ -47,7 +47,12 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
     setIsFocused(false)
   }
 
-  const showDropdown = results.length > 0 && isFocused
+  // Deduplicate: keep only first result per name+admin1 combination
+  const dedupedResults = results.filter((r, i, arr) =>
+    arr.findIndex((x) => x.name === r.name && x.admin1 === r.admin1) === i
+  )
+
+  const showDropdown = dedupedResults.length > 0 && isFocused
 
   return (
     <div ref={containerRef} className="relative w-full">
@@ -122,7 +127,7 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
             'overflow-hidden',
           ].join(' ')}
         >
-          {results.map((r, index) => (
+          {dedupedResults.map((r, index) => (
             <li key={`${r.latitude}-${r.longitude}`}>
               <button
                 onClick={() => handleSelect(r)}
@@ -130,16 +135,20 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
                   'w-full flex items-center justify-between px-4 py-3',
                   'text-left transition-all duration-150',
                   'hover:bg-slate-800/70 group',
-                  index !== results.length - 1 ? 'border-b border-slate-800/60' : '',
+                  index !== dedupedResults.length - 1 ? 'border-b border-slate-800/60' : '',
                 ].join(' ')}
               >
                 <div className="flex items-center gap-2.5">
-                  <WiDaySunny
+                  <svg
+                    width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                     className="text-slate-500 group-hover:text-cyan-400 transition-colors duration-150 shrink-0"
-                    size={18}
-                  />
+                  >
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                    <circle cx="12" cy="9" r="2.5"/>
+                  </svg>
                   <span className="text-sm text-slate-200 font-mono tracking-wide group-hover:text-white transition-colors duration-150">
-                    {r.name}
+                    {r.name}{r.admin1 ? `, ${r.admin1}` : ''}
                   </span>
                 </div>
                 <span className="text-xs text-slate-500 font-mono group-hover:text-slate-400 transition-colors duration-150 ml-2 shrink-0">

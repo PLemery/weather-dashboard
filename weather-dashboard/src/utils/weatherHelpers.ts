@@ -65,5 +65,6 @@ export async function searchCities(query: string): Promise<GeocodingResult[]> {
     latitude: r.latitude as number,
     longitude: r.longitude as number,
     country: r.country as string,
+    admin1: r.admin1 as string | undefined,
   }))
 }
