@@ -16,9 +16,20 @@ function getThemeClass(code: number | undefined): string {
   if (code === 2 || code === 3) return 'bg-gradient-to-br from-slate-400 to-slate-600'
   if (code >= 45 && code <= 48) return 'bg-gradient-to-br from-gray-400 to-gray-600'
   if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'bg-gradient-to-br from-blue-700 to-slate-800'
-  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return 'bg-gradient-to-br from-slate-100 to-blue-200 text-slate-800'
+  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return 'bg-gradient-to-br from-slate-100 to-blue-200'
   if (code >= 95) return 'bg-gradient-to-br from-purple-900 to-slate-900'
   return 'bg-gray-900'
+}
+
+// Returns text color for labels floating directly on the background (not inside glass cards)
+function getThemeLabelClass(code: number | undefined): string {
+  if (code === undefined) return 'text-slate-400'
+  // Snow/ice — light background, needs dark text
+  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return 'text-slate-600'
+  // Clear sky, overcast, fog — medium background, needs bright text
+  if (code <= 3 || (code >= 45 && code <= 48)) return 'text-white/80'
+  // Rain, thunder, default — dark background
+  return 'text-slate-400'
 }
 
 function App() {
@@ -34,6 +45,7 @@ function App() {
   })
   const [unit, setUnit] = useState<'C' | 'F'>('F')
   const { data, loading, error } = useWeather(activeCity)
+  const labelClass = getThemeLabelClass(data?.current.weatherCode)
 
   const handleCitySelect = useCallback((city: City) => {
     setActiveCity(city)
@@ -83,7 +95,7 @@ function App() {
         {/* Top bar: search + title */}
         <header className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="flex-1 min-w-0">
-            <h1 className="text-[10px] font-mono tracking-[0.3em] uppercase text-slate-400 mb-0.5">
+            <h1 className={`text-[10px] font-mono tracking-[0.3em] uppercase ${labelClass} mb-0.5`}>
               Weather Dashboard
             </h1>
           </div>
@@ -131,7 +143,7 @@ function App() {
                 <div>
                   <div className="flex items-center gap-2 mb-3 px-1">
                     <div className="w-1 h-1 rounded-full bg-cyan-400/50" />
-                    <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400">
+                    <span className={`text-[10px] font-mono tracking-widest uppercase ${labelClass}`}>
                       7-Day Forecast
                     </span>
                   </div>
@@ -146,7 +158,7 @@ function App() {
                 <div>
                   <div className="flex items-center gap-2 mb-3 px-1">
                     <div className="w-1 h-1 rounded-full bg-cyan-400/50" />
-                    <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400">
+                    <span className={`text-[10px] font-mono tracking-widest uppercase ${labelClass}`}>
                       Hourly Trend
                     </span>
                   </div>
@@ -160,7 +172,7 @@ function App() {
           <aside className="lg:sticky lg:top-8">
             <div className="flex items-center gap-2 mb-3 px-1">
               <div className="w-1 h-1 rounded-full bg-cyan-400/50" />
-              <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400">
+              <span className={`text-[10px] font-mono tracking-widest uppercase ${labelClass}`}>
                 Favorites
               </span>
             </div>
