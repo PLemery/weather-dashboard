@@ -55,7 +55,7 @@ export function HourlyChart({ hours, unit }: HourlyChartProps) {
             tick={{ fill: '#94a3b8', fontSize: 10, fontFamily: 'monospace' }}
             tickLine={false}
             axisLine={false}
-            interval="preserveStartEnd"
+            interval={3}
           />
 
           <YAxis
