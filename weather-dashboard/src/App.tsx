@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { SearchBar } from './components/SearchBar'
 import { CurrentWeather } from './components/CurrentWeather'
 import { ForecastCard } from './components/ForecastCard'
@@ -23,12 +23,20 @@ function getThemeClass(code: number | undefined): string {
 }
 
 function App() {
-  const [activeCity, setActiveCity] = useState<City | null>(null)
-  const [unit, setUnit] = useState<'C' | 'F'>('C')
   const [savedCities, setSavedCities] = useState<City[]>(() => {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]') }
     catch { return [] }
   })
+  const [activeCity, setActiveCity] = useState<City | null>(() => {
+    try {
+      const cities: City[] = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]')
+      return cities[0] ?? null
+    } catch { return null }
+  })
+  const [unit, setUnit] = useState<'C' | 'F'>('F')
+  const hadSavedCitiesOnMount = useRef(
+    (() => { try { return (JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]') as City[]).length > 0 } catch { return false } })()
+  )
   const { data, loading, error } = useWeather(activeCity)
 
   const handleCitySelect = useCallback((city: City) => {
@@ -41,6 +49,7 @@ function App() {
   }, [savedCities])
 
   useEffect(() => {
+    if (hadSavedCitiesOnMount.current) return
     getUserLocation()
       .then(({ latitude, longitude }) => searchCities(`${latitude},${longitude}`))
       .then((results) => {
