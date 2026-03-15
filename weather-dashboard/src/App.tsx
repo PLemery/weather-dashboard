@@ -48,8 +48,17 @@ function App() {
   const labelClass = getThemeLabelClass(data?.current.weatherCode)
 
   const handleCitySelect = useCallback((city: City) => {
-    setActiveCity(city)
-    setSavedCities((prev) => prev.some((c) => c.id === city.id) ? prev : [...prev, city])
+    setSavedCities((prev) => {
+      const existing = prev.find(
+        (c) => c.name === city.name && c.country === city.country && c.admin1 === city.admin1
+      )
+      if (existing) {
+        setActiveCity(existing)
+        return prev
+      }
+      setActiveCity(city)
+      return [...prev, city]
+    })
   }, [])
 
   useEffect(() => {
