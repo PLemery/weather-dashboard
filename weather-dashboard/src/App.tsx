@@ -55,6 +55,7 @@ function App() {
             latitude,
             longitude,
             country: place.countryName ?? '',
+            admin1: place.principalSubdivision || undefined,
           }))
       )
       .catch(() => {})

@@ -54,7 +54,7 @@ export function CityList({ cities, activeCity, onCitySelect, onRemoveCity }: Cit
                   {city.name}
                 </span>
                 <span className="block text-[10px] font-mono text-slate-400 uppercase tracking-wider mt-0.5">
-                  {city.country}
+                  {[city.admin1, city.country].filter(Boolean).join(', ')}
                 </span>
               </button>
 

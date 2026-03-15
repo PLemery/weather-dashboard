@@ -40,6 +40,7 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
       latitude: result.latitude,
       longitude: result.longitude,
       country: result.country,
+      admin1: result.admin1,
     }
     onCitySelect(city)
     setQuery('')

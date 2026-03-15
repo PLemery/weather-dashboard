@@ -43,6 +43,7 @@ export interface City {
   latitude: number
   longitude: number
   country: string
+  admin1?: string       // state / province
 }
 
 // ─── Component Prop Types ──────────────────────────────────────────────────
