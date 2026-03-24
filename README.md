@@ -1,5 +1,7 @@
 # Weather Dashboard
 
+**Live demo: [weather-dashboard-r3uj.onrender.com](https://weather-dashboard-r3uj.onrender.com)**
+
 A weather dashboard built with React and TypeScript. Search for any city, save favorites, and get current conditions, a 7-day forecast, and an hourly temperature chart — all from a free API with no key required.
 
 ## Features
