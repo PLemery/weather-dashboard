@@ -47,19 +47,3 @@ weather-dashboard/src/
 └── main.tsx
 ```
 
-## Running Locally
-
-```bash
-cd weather-dashboard
-npm install
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173).
-
-## Deployment
-
-Deployed as a static site on [Render](https://render.com/).
-
-Build command: `cd weather-dashboard && npm install && npm run build`
-Publish directory: `weather-dashboard/dist`
